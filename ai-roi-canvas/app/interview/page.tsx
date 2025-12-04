@@ -52,13 +52,13 @@ function InterviewContent() {
       {/* Main Content Area - below nav */}
       <div className="flex-1 flex overflow-hidden pt-16">
         {/* Chat Section - Main */}
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden min-w-0">
           <ChatInterface />
         </div>
 
         {/* Sidebar - Context & Use Cases */}
-        <div className="w-80 border-l border-border/50 bg-card/30 backdrop-blur-sm hidden lg:flex flex-col overflow-hidden">
-          <ScrollArea className="flex-1">
+        <div className="w-80 min-w-[320px] max-w-[320px] border-l border-border/50 bg-card/30 backdrop-blur-sm hidden lg:flex flex-col overflow-hidden flex-shrink-0">
+          <ScrollArea className="h-full">
             <div className="p-4 space-y-4">
               {/* Company Context Card */}
               <Card className="border-border/50 bg-card/50">
@@ -71,19 +71,19 @@ function InterviewContent() {
                 <CardContent className="space-y-2 text-sm">
                   {companyName ? (
                     <>
-                      <div>
-                        <span className="text-muted-foreground">Company:</span>
-                        <span className="ml-2 font-medium">{companyName}</span>
+                      <div className="flex flex-col">
+                        <span className="text-muted-foreground text-xs">Company:</span>
+                        <span className="font-medium truncate">{companyName}</span>
                       </div>
                       {industry && (
-                        <div>
-                          <span className="text-muted-foreground">Industry:</span>
-                          <span className="ml-2 font-medium">{industry}</span>
+                        <div className="flex flex-col">
+                          <span className="text-muted-foreground text-xs">Industry:</span>
+                          <span className="font-medium truncate">{industry}</span>
                         </div>
                       )}
-                      <div>
-                        <span className="text-muted-foreground">Budget:</span>
-                        <span className="ml-2 font-medium">{formatCurrency(budgetConstraint)}</span>
+                      <div className="flex flex-col">
+                        <span className="text-muted-foreground text-xs">Budget:</span>
+                        <span className="font-medium">{formatCurrency(budgetConstraint)}</span>
                       </div>
                     </>
                   ) : (
@@ -107,9 +107,9 @@ function InterviewContent() {
                     </Badge>
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-0">
                   {useCases.length > 0 ? (
-                    <div className="space-y-3">
+                    <div className="px-4 pb-4 space-y-2 max-h-[400px] overflow-y-auto">
                       {useCases.map((uc) => {
                         const roi = calculateROI(uc);
                         return (
@@ -117,37 +117,37 @@ function InterviewContent() {
                             key={uc.id} 
                             className="p-2 rounded-lg bg-background/50 border border-border/30"
                           >
-                            <div className="font-medium text-sm mb-1 truncate">
+                            <div className="font-medium text-xs mb-1 truncate" title={uc.name}>
                               {uc.name || 'Unnamed Use Case'}
                             </div>
-                            <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs">
+                            <div className="grid grid-cols-2 gap-x-2 gap-y-0.5 text-[10px]">
                               <div className="flex items-center gap-1 text-muted-foreground">
-                                <DollarSign className="w-3 h-3" />
-                                {formatCurrency(uc.hardBenefits)}
+                                <DollarSign className="w-3 h-3 flex-shrink-0" />
+                                <span className="truncate">{formatCurrency(uc.hardBenefits)}</span>
                               </div>
                               <div className="flex items-center gap-1 text-muted-foreground">
-                                <TrendingUp className="w-3 h-3" />
-                                {formatPercent(roi.basicROI)}
+                                <TrendingUp className="w-3 h-3 flex-shrink-0" />
+                                <span>{formatPercent(roi.basicROI)}</span>
                               </div>
                               <div className="flex items-center gap-1 text-muted-foreground">
-                                <Clock className="w-3 h-3" />
-                                {roi.paybackPeriod === Infinity ? 'N/A' : `${roi.paybackPeriod} mo`}
+                                <Clock className="w-3 h-3 flex-shrink-0" />
+                                <span>{roi.paybackPeriod === Infinity ? 'N/A' : `${roi.paybackPeriod} mo`}</span>
                               </div>
                               <div className="flex items-center gap-1 text-muted-foreground">
-                                <AlertTriangle className="w-3 h-3" />
-                                {uc.riskLevel}
+                                <AlertTriangle className="w-3 h-3 flex-shrink-0" />
+                                <span>{uc.riskLevel}</span>
                               </div>
                             </div>
-                            <div className="flex gap-1 mt-2">
+                            <div className="flex gap-1 mt-1.5 flex-wrap">
                               <Badge 
                                 variant="outline" 
-                                className="text-[10px] px-1.5 py-0"
+                                className="text-[9px] px-1 py-0 h-4"
                               >
                                 Impact: {uc.impactScore}
                               </Badge>
                               <Badge 
                                 variant="outline" 
-                                className="text-[10px] px-1.5 py-0"
+                                className="text-[9px] px-1 py-0 h-4"
                               >
                                 Effort: {uc.effortScore}
                               </Badge>
@@ -157,25 +157,26 @@ function InterviewContent() {
                       })}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground text-xs px-4 pb-4">
                       AI use cases will appear here as you describe them during the interview.
                     </p>
                   )}
                 </CardContent>
               </Card>
 
-              {/* Quick Tips */}
-              <Card className="border-border/50 bg-card/50">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm">Quick Tips</CardTitle>
-                </CardHeader>
-                <CardContent className="text-xs text-muted-foreground space-y-2">
-                  <p>• Describe at least 5 AI use cases for best results</p>
-                  <p>• Include specific dollar estimates for benefits</p>
-                  <p>• Consider dependencies between projects</p>
-                  <p>• Think about quick wins vs. long-term investments</p>
-                </CardContent>
-              </Card>
+              {/* Quick Tips - Collapsible when many use cases */}
+              {useCases.length < 3 && (
+                <Card className="border-border/50 bg-card/50">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm">Quick Tips</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-xs text-muted-foreground space-y-1">
+                    <p>• Describe at least 5 AI use cases</p>
+                    <p>• Include dollar estimates for benefits</p>
+                    <p>• Consider dependencies between projects</p>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </ScrollArea>
         </div>

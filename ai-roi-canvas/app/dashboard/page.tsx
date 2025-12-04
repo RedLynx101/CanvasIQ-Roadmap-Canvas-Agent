@@ -319,10 +319,13 @@ function DashboardContent() {
                       <Tooltip 
                         formatter={(value: number) => [`${value.toFixed(1)}%`, 'ROI']}
                         contentStyle={{ 
-                          backgroundColor: 'hsl(var(--card))', 
-                          border: '1px solid hsl(var(--border))',
-                          borderRadius: '8px'
+                          backgroundColor: '#1e293b', 
+                          border: '1px solid #334155',
+                          borderRadius: '8px',
+                          color: '#f1f5f9',
                         }}
+                        labelStyle={{ color: '#94a3b8' }}
+                        itemStyle={{ color: '#f1f5f9' }}
                       />
                       <Bar dataKey="roi" radius={[0, 4, 4, 0]}>
                         {roiChartData.map((entry, index) => (
@@ -363,10 +366,13 @@ function DashboardContent() {
                       </Pie>
                       <Tooltip 
                         contentStyle={{ 
-                          backgroundColor: 'hsl(var(--card))', 
-                          border: '1px solid hsl(var(--border))',
-                          borderRadius: '8px'
+                          backgroundColor: '#1e293b', 
+                          border: '1px solid #334155',
+                          borderRadius: '8px',
+                          color: '#f1f5f9',
                         }}
+                        labelStyle={{ color: '#94a3b8' }}
+                        itemStyle={{ color: '#f1f5f9' }}
                       />
                     </PieChart>
                   </ResponsiveContainer>
