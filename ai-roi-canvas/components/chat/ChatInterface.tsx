@@ -137,6 +137,22 @@ export function ChatInterface() {
     let match;
     let jsonExtractedCompany = false;
     let jsonExtractedUseCases = false;
+    const aggregatedNewUseCases: Array<{
+      id: string;
+      name: string;
+      problemStatement: string;
+      kpis: string[];
+      hardBenefits: number;
+      softBenefits: string[];
+      implementationCost: number;
+      annualCost: number;
+      effortScore: 1|2|3|4|5;
+      impactScore: 1|2|3|4|5;
+      riskLevel: 'Low'|'Medium'|'High';
+      dependencies: string[];
+      timeframe: 'Q1'|'1-Year'|'3-Year';
+      selected: boolean;
+    }> = [];
     
     while ((match = jsonBlockRegex.exec(aiContent)) !== null) {
       try {
@@ -207,21 +223,85 @@ export function ChatInterface() {
             };
           });
           
-          // Only add use cases that don't already exist (by name)
-          const existingNames = new Set(useCases.map(u => u.name.toLowerCase()));
-          const trulyNewUseCases = newUseCases.filter(
-            (uc: { name: string }) => !existingNames.has(uc.name.toLowerCase())
-          );
-          
-          if (trulyNewUseCases.length > 0) {
-            setUseCases([...useCases, ...trulyNewUseCases]);
-            jsonExtractedUseCases = true;
-          }
+          aggregatedNewUseCases.push(...newUseCases);
+          jsonExtractedUseCases = true;
         }
       } catch (e) {
         // JSON parsing failed, will use fallback extraction
         console.log('JSON parsing failed:', e);
       }
+    }
+
+    // Fallback: if no fenced JSON blocks, try to parse inline JSON containing "useCases"
+    if (!jsonExtractedUseCases) {
+      const inlineJsonRegex = /\{[\s\S]*?"useCases"\s*:\s*\[[\s\S]*?\}\s*\}/g;
+      const inlineMatches = aiContent.match(inlineJsonRegex) || [];
+
+      inlineMatches.forEach((block) => {
+        try {
+          const jsonData = JSON.parse(block);
+          if (jsonData.useCases && Array.isArray(jsonData.useCases)) {
+            const newUseCases = jsonData.useCases.map((uc: {
+              name?: string;
+              problemStatement?: string;
+              kpis?: string[];
+              hardBenefits?: number;
+              softBenefits?: string[];
+              implementationCost?: number;
+              annualCost?: number;
+              effortScore?: number;
+              impactScore?: number;
+              riskLevel?: string;
+              dependencies?: string[];
+              timeframe?: string;
+            }, index: number) => {
+              let effort = Math.min(5, Math.max(1, uc.effortScore || 3)) as 1|2|3|4|5;
+              let impact = Math.min(5, Math.max(1, uc.impactScore || 3)) as 1|2|3|4|5;
+              
+              const validRisks = ['Low', 'Medium', 'High'];
+              const normalizedRisk = (uc.riskLevel || '').toLowerCase().replace(/[^a-z]/g, '');
+              const riskMap: Record<string, 'Low'|'Medium'|'High'> = {
+                low: 'Low',
+                medium: 'Medium',
+                high: 'High',
+                lowmedium: 'Medium',
+                mediumlow: 'Medium',
+                mediumhigh: 'Medium',
+                highmedium: 'Medium',
+              };
+              let risk: 'Low'|'Medium'|'High' = riskMap[normalizedRisk] || 'Medium';
+              if (!validRisks.includes(risk)) risk = 'Medium';
+              
+              const validTimeframes = ['Q1', '1-Year', '3-Year'];
+              let timeframe: 'Q1'|'1-Year'|'3-Year' = '1-Year';
+              if (uc.timeframe && validTimeframes.includes(uc.timeframe)) {
+                timeframe = uc.timeframe as 'Q1'|'1-Year'|'3-Year';
+              }
+
+              return {
+                id: `uc-${Date.now()}-${index}`,
+                name: uc.name || 'Unnamed Use Case',
+                problemStatement: uc.problemStatement || '',
+                kpis: uc.kpis || [],
+                hardBenefits: uc.hardBenefits || 0,
+                softBenefits: uc.softBenefits || [],
+                implementationCost: uc.implementationCost || 0,
+                annualCost: uc.annualCost || 0,
+                effortScore: effort,
+                impactScore: impact,
+                riskLevel: risk,
+                dependencies: uc.dependencies || [],
+                timeframe: timeframe,
+                selected: true,
+              };
+            });
+
+            aggregatedNewUseCases.push(...newUseCases);
+          }
+        } catch (e) {
+          console.log('Inline JSON parsing failed:', e);
+        }
+      });
     }
     
     // Fallback: Extract company context from user message (only if JSON extraction didn't find it)
@@ -252,6 +332,17 @@ export function ChatInterface() {
       if (name || (ind && ind.length >= 3) || budgetMatch) {
         setCompanyContext(name || companyName, ind || industry, budget);
       }
+    }
+
+    // After processing all blocks, merge use cases once using latest state
+    if (aggregatedNewUseCases.length > 0) {
+      setUseCases((prev) => {
+        const existingNames = new Set(prev.map(u => u.name.toLowerCase()));
+        const deduped = aggregatedNewUseCases.filter(
+          (uc) => !existingNames.has(uc.name.toLowerCase())
+        );
+        return deduped.length > 0 ? [...prev, ...deduped] : prev;
+      });
     }
   }, [companyName, industry, budgetConstraint, useCases, setCompanyContext, setUseCases]);
 

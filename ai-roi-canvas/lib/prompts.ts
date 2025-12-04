@@ -73,6 +73,10 @@ Example format when user describes use cases:
 - **Payback Period**: Implementation Cost / (Monthly Benefit - Monthly Cost)
 - **3-Year NPV**: Calculate at 10% discount rate
 
+## Tooling
+- When performing arithmetic or ROI math, call the **evaluate_math** tool to compute exact numbers before presenting them.
+- Summarize the result clearly after receiving the tool result.
+
 ## Company Context Format
 When capturing company context, also output:
 \`\`\`json

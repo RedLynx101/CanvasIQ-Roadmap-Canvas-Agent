@@ -41,6 +41,7 @@ export default function InterviewPage() {
 
 function InterviewContent() {
   const { useCases, companyName, industry, budgetConstraint } = useCanvasStore();
+  const safeUseCases = Array.isArray(useCases) ? useCases : [];
 
   return (
     <main className="h-screen flex flex-col overflow-hidden">
@@ -103,14 +104,14 @@ function InterviewContent() {
                       Use Cases
                     </span>
                     <Badge variant="secondary" className="text-xs">
-                      {useCases.length} / 5+
+                      {safeUseCases.length} / 5+
                     </Badge>
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
-                  {useCases.length > 0 ? (
+                  {safeUseCases.length > 0 ? (
                     <div className="px-4 pb-4 space-y-2 max-h-[400px] overflow-y-auto">
-                      {useCases.map((uc) => {
+                      {safeUseCases.map((uc) => {
                         const roi = calculateROI(uc);
                         return (
                           <div 
@@ -165,7 +166,7 @@ function InterviewContent() {
               </Card>
 
               {/* Quick Tips - Collapsible when many use cases */}
-              {useCases.length < 3 && (
+              {safeUseCases.length < 3 && (
                 <Card className="border-border/50 bg-card/50">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm">Quick Tips</CardTitle>

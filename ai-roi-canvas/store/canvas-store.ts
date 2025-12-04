@@ -36,7 +36,7 @@ interface CanvasStore {
   updateUseCase: (id: string, data: Partial<AIUseCase>) => void;
   removeUseCase: (id: string) => void;
   toggleUseCaseSelection: (id: string) => void;
-  setUseCases: (useCases: AIUseCase[]) => void;
+  setUseCases: (useCases: AIUseCase[] | ((prev: AIUseCase[]) => AIUseCase[])) => void;
   
   // Actions - Chat
   addMessage: (message: Omit<ChatMessage, 'id' | 'timestamp'>) => void;
@@ -102,7 +102,15 @@ export const useCanvasStore = create<CanvasStore>()(
         ),
       })),
       
-      setUseCases: (useCases) => set({ useCases }),
+      setUseCases: (useCasesOrUpdater) =>
+        set((state) => {
+          const currentUseCases = Array.isArray(state.useCases) ? state.useCases : [];
+          if (typeof useCasesOrUpdater === 'function') {
+            const result = useCasesOrUpdater(currentUseCases);
+            return { useCases: Array.isArray(result) ? result : currentUseCases };
+          }
+          return { useCases: Array.isArray(useCasesOrUpdater) ? useCasesOrUpdater : [] };
+        }),
       
       // Chat actions
       addMessage: (message) => set((state) => ({
