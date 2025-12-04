@@ -71,10 +71,12 @@ function DashboardContent() {
     selected: uc.selected,
   }));
 
+  // Only count SELECTED use cases for the pie chart
+  const selectedUseCases = useCases.filter(uc => uc.selected);
   const timeframeData = [
-    { name: 'Q1', value: useCases.filter(uc => uc.timeframe === 'Q1').length, color: '#60a5fa' },
-    { name: '1-Year', value: useCases.filter(uc => uc.timeframe === '1-Year').length, color: '#34d399' },
-    { name: '3-Year', value: useCases.filter(uc => uc.timeframe === '3-Year').length, color: '#a78bfa' },
+    { name: 'Q1', value: selectedUseCases.filter(uc => uc.timeframe === 'Q1').length, color: '#60a5fa' },
+    { name: '1-Year', value: selectedUseCases.filter(uc => uc.timeframe === '1-Year').length, color: '#34d399' },
+    { name: '3-Year', value: selectedUseCases.filter(uc => uc.timeframe === '3-Year').length, color: '#a78bfa' },
   ];
 
   const handleSelectAll = () => {
