@@ -198,42 +198,51 @@ export function ChatInterface() {
               risk = uc.riskLevel as 'Low'|'Medium'|'High';
             }
             
-            // Validate timeframe
+            // Validate timeframe - if not provided, auto-assign based on effort/impact
             const validTimeframes = ['Q1', '1-Year', '3-Year'];
             let timeframe: 'Q1'|'1-Year'|'3-Year' = '1-Year';
             if (uc.timeframe && validTimeframes.includes(uc.timeframe)) {
               timeframe = uc.timeframe as 'Q1'|'1-Year'|'3-Year';
+            } else {
+              // Auto-assign based on effort/impact scores (same logic as roadmap page)
+              if (effort <= 2 && impact >= 4) {
+                timeframe = 'Q1'; // Quick wins
+              } else if (effort >= 4) {
+                timeframe = '3-Year'; // High effort goes to long-term
+              } else {
+                timeframe = '1-Year'; // Everything else
+              }
             }
             
-            return {
-              id: `uc-${Date.now()}-${index}`,
-              name: uc.name || 'Unnamed Use Case',
-              problemStatement: uc.problemStatement || '',
-              kpis: uc.kpis || [],
-              hardBenefits: uc.hardBenefits || 0,
-              softBenefits: uc.softBenefits || [],
-              implementationCost: uc.implementationCost || 0,
-              annualCost: uc.annualCost || 0,
-              effortScore: effort,
-              impactScore: impact,
-              riskLevel: risk,
-              dependencies: uc.dependencies || [],
-              timeframe: timeframe,
-              selected: true,
-            };
-          });
-          
-          aggregatedNewUseCases.push(...newUseCases);
-          jsonExtractedUseCases = true;
+              return {
+                id: `uc-${Date.now()}-${Math.random().toString(36).substring(2, 9)}-${index}`,
+                name: uc.name || 'Unnamed Use Case',
+                problemStatement: uc.problemStatement || '',
+                kpis: uc.kpis || [],
+                hardBenefits: uc.hardBenefits || 0,
+                softBenefits: uc.softBenefits || [],
+                implementationCost: uc.implementationCost || 0,
+                annualCost: uc.annualCost || 0,
+                effortScore: effort,
+                impactScore: impact,
+                riskLevel: risk,
+                dependencies: uc.dependencies || [],
+                timeframe: timeframe,
+                selected: true,
+              };
+            });
+            
+            aggregatedNewUseCases.push(...newUseCases);
+            jsonExtractedUseCases = true;
+          }
+        } catch (e) {
+          // JSON parsing failed, will use fallback extraction
+          console.log('JSON parsing failed:', e);
         }
-      } catch (e) {
-        // JSON parsing failed, will use fallback extraction
-        console.log('JSON parsing failed:', e);
       }
-    }
 
-    // Fallback: if no fenced JSON blocks, try to parse inline JSON containing "useCases"
-    if (!jsonExtractedUseCases) {
+      // Fallback: if no fenced JSON blocks, try to parse inline JSON containing "useCases"
+      if (!jsonExtractedUseCases) {
       const inlineJsonRegex = /\{[\s\S]*?"useCases"\s*:\s*\[[\s\S]*?\}\s*\}/g;
       const inlineMatches = aiContent.match(inlineJsonRegex) || [];
 
@@ -272,14 +281,24 @@ export function ChatInterface() {
               let risk: 'Low'|'Medium'|'High' = riskMap[normalizedRisk] || 'Medium';
               if (!validRisks.includes(risk)) risk = 'Medium';
               
+              // Validate timeframe - if not provided, auto-assign based on effort/impact
               const validTimeframes = ['Q1', '1-Year', '3-Year'];
               let timeframe: 'Q1'|'1-Year'|'3-Year' = '1-Year';
               if (uc.timeframe && validTimeframes.includes(uc.timeframe)) {
                 timeframe = uc.timeframe as 'Q1'|'1-Year'|'3-Year';
+              } else {
+                // Auto-assign based on effort/impact scores
+                if (effort <= 2 && impact >= 4) {
+                  timeframe = 'Q1'; // Quick wins
+                } else if (effort >= 4) {
+                  timeframe = '3-Year'; // High effort goes to long-term
+                } else {
+                  timeframe = '1-Year'; // Everything else
+                }
               }
 
               return {
-                id: `uc-${Date.now()}-${index}`,
+                id: `uc-${Date.now()}-${Math.random().toString(36).substring(2, 9)}-${index}`,
                 name: uc.name || 'Unnamed Use Case',
                 problemStatement: uc.problemStatement || '',
                 kpis: uc.kpis || [],

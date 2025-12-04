@@ -105,11 +105,21 @@ export const useCanvasStore = create<CanvasStore>()(
       setUseCases: (useCasesOrUpdater) =>
         set((state) => {
           const currentUseCases = Array.isArray(state.useCases) ? state.useCases : [];
+          let newUseCases: AIUseCase[];
           if (typeof useCasesOrUpdater === 'function') {
             const result = useCasesOrUpdater(currentUseCases);
-            return { useCases: Array.isArray(result) ? result : currentUseCases };
+            newUseCases = Array.isArray(result) ? result : currentUseCases;
+          } else {
+            newUseCases = Array.isArray(useCasesOrUpdater) ? useCasesOrUpdater : [];
           }
-          return { useCases: Array.isArray(useCasesOrUpdater) ? useCasesOrUpdater : [] };
+          // Deduplicate by ID to prevent React key collisions
+          const seenIds = new Set<string>();
+          const deduped = newUseCases.filter((uc) => {
+            if (seenIds.has(uc.id)) return false;
+            seenIds.add(uc.id);
+            return true;
+          });
+          return { useCases: deduped };
         }),
       
       // Chat actions
@@ -169,7 +179,21 @@ export const useCanvasStore = create<CanvasStore>()(
         budgetConstraint: state.budgetConstraint,
       }),
       onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
+        if (state) {
+          state.setHasHydrated(true);
+          // Deduplicate use cases on rehydration to fix any existing duplicates
+          if (Array.isArray(state.useCases) && state.useCases.length > 0) {
+            const seenIds = new Set<string>();
+            const deduped = state.useCases.filter((uc) => {
+              if (seenIds.has(uc.id)) return false;
+              seenIds.add(uc.id);
+              return true;
+            });
+            if (deduped.length !== state.useCases.length) {
+              state.setUseCases(deduped);
+            }
+          }
+        }
       },
     }
   )
