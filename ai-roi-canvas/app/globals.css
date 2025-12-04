@@ -445,12 +445,25 @@
   }
 
   .print-phase {
-    padding: 3pt 0 !important;
+    padding: 4pt 0 !important;
     border-bottom: 0.5pt solid #e5e7eb !important;
   }
 
   .print-phase:last-child {
     border-bottom: none !important;
+  }
+
+  .print-milestones {
+    margin-top: 2pt !important;
+    font-size: 6.5pt !important;
+    color: #6b7280 !important;
+    padding-left: 8pt !important;
+  }
+
+  .print-milestones em {
+    font-style: normal !important;
+    font-weight: 600 !important;
+    color: #4b5563 !important;
   }
 
   /* Risks - Bottom Left */

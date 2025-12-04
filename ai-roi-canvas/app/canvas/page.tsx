@@ -415,7 +415,7 @@ function CanvasPreview({ canvas }: { canvas: AIROICanvas }) {
           <CardHeader className="pb-2 print:pb-1 print:bg-gray-50">
             <CardTitle className="text-sm flex items-center gap-2 print:text-gray-800">
               <Calendar className="w-4 h-4 text-blue-500 print:text-blue-600" />
-              Implementation Timeline
+              Implementation Timeline & Milestones
             </CardTitle>
           </CardHeader>
           <CardContent className="print:py-3">
@@ -438,13 +438,25 @@ function CanvasPreview({ canvas }: { canvas: AIROICanvas }) {
                     {items.length === 0 ? (
                       <p className="text-xs text-muted-foreground print:text-gray-400 italic">No initiatives planned</p>
                     ) : (
-                      <ul className="text-xs space-y-1 print:space-y-0.5">
+                      <div className="space-y-2">
                         {items.map((item, i) => (
-                          <li key={i} className="text-muted-foreground print:text-gray-600 print:leading-tight">
-                            • {item.aiInitiative}
-                          </li>
+                          <div key={i} className="text-xs">
+                            <div className="text-muted-foreground print:text-gray-600 font-medium">
+                              • {item.aiInitiative}
+                            </div>
+                            {item.milestones && item.milestones.length > 0 && (
+                              <div className="ml-3 mt-1 text-[10px] text-muted-foreground/70 print:text-gray-500">
+                                {item.milestones.map((m, mi) => (
+                                  <span key={mi}>
+                                    {mi > 0 && ' → '}
+                                    <span className="font-medium">{m.name}</span>
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     )}
                   </div>
                 );
@@ -669,12 +681,20 @@ function PrintableCanvas({ canvas }: { canvas: AIROICanvas }) {
             <Calendar className="print-section-icon" />
           </div>
           <div className="print-section-content print-timeline-content">
-            {['Q1', '1-Year', '3-Year'].map((timeframe, idx) => {
+            {['Q1', '1-Year', '3-Year'].map((timeframe) => {
               const items = canvas.timeline.filter(t => t.timeframe === timeframe);
-              const phaseLabel = timeframe === 'Q1' ? 'Phase 1 (Q1)' : timeframe === '1-Year' ? 'Phase 2 (Year 1)' : 'Phase 3 (Years 2-3)';
-              return items.length > 0 && (
+              const phaseLabel = timeframe === 'Q1' ? 'Phase 1 (Weeks 0–12)' : timeframe === '1-Year' ? 'Phase 2 (Months 3–12)' : 'Phase 3 (Years 1–3)';
+              if (items.length === 0) return null;
+              // Get unique milestones across all initiatives in this phase
+              const milestones = items.length > 0 ? items[0].milestones : [];
+              return (
                 <div key={timeframe} className="print-phase">
                   <strong>{phaseLabel}:</strong> {items.map(t => t.aiInitiative).join(', ')}.
+                  {milestones.length > 0 && (
+                    <div className="print-milestones">
+                      <em>Milestones:</em> {milestones.map(m => `${m.name} (${m.description})`).join(' → ')}
+                    </div>
+                  )}
                 </div>
               );
             })}
