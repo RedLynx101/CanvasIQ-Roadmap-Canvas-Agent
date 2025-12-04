@@ -297,8 +297,7 @@
   /* Hide non-printable elements */
   .no-print,
   nav,
-  button,
-  .print\\:hidden {
+  button {
     display: none !important;
   }
   
