@@ -28,7 +28,14 @@ import {
   Cpu,
   DollarSign,
   TrendingUp,
-  Sparkles
+  Sparkles,
+  CheckSquare,
+  Database,
+  Users,
+  Zap,
+  Shield,
+  BarChart3,
+  PieChart
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -218,13 +225,13 @@ function CanvasContent() {
   }
 
   return (
-    <main className="min-h-screen print:bg-white">
+    <main className="min-h-screen print:bg-white print:min-h-0">
       <Navigation />
       
-      <div className="pt-24 px-4 pb-12 print:pt-0 print:px-0">
+      <div className="pt-24 px-4 pb-12 print:hidden">
         <div className="max-w-5xl mx-auto">
           {/* Header - Hide on print */}
-          <div className="flex items-center justify-between mb-8 print:hidden">
+          <div className="flex items-center justify-between mb-8">
             <div>
               <h1 className="text-3xl font-bold mb-2">AI ROI & Roadmap Canvas</h1>
               <p className="text-muted-foreground">
@@ -248,7 +255,7 @@ function CanvasContent() {
           </div>
 
           {/* Tabs - Hide on print */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="print:hidden">
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-6">
               <TabsTrigger value="preview">Canvas Preview</TabsTrigger>
               <TabsTrigger value="json">JSON View</TabsTrigger>
@@ -276,17 +283,15 @@ function CanvasContent() {
             </TabsContent>
 
             <TabsContent value="preview">
-              {/* Canvas Preview - This is what gets printed */}
+              {/* Canvas Preview - scrollable version for screen */}
               <CanvasPreview canvas={canvas} />
             </TabsContent>
           </Tabs>
-
-          {/* Print-only canvas */}
-          <div className="hidden print:block">
-            <CanvasPreview canvas={canvas} />
-          </div>
         </div>
       </div>
+
+      {/* Print-only single-page canvas */}
+      <PrintableCanvas canvas={canvas} />
     </main>
   );
 }
@@ -588,6 +593,184 @@ function CanvasPreview({ canvas }: { canvas: AIROICanvas }) {
       <div className="canvas-footer text-center text-xs text-muted-foreground print:text-gray-500 pt-4 print:pt-3 print:mt-4 print:border-t print:border-gray-200">
         <p>{canvas.footer.creditLine}</p>
       </div>
+    </div>
+  );
+}
+
+// ============================================================
+// PRINTABLE CANVAS - Single Page PDF Export Layout
+// ============================================================
+function PrintableCanvas({ canvas }: { canvas: AIROICanvas }) {
+  return (
+    <div className="print-canvas hidden print:block">
+      {/* Main Title Header */}
+      <header className="print-canvas-header">
+        <h1 className="print-canvas-title">AI Overall ROI and Roadmap Canvas</h1>
+        <div className="print-canvas-brand">
+          <Sparkles className="w-4 h-4" />
+          <span>CanvasIQ</span>
+        </div>
+      </header>
+
+      {/* Objectives - Full Width */}
+      <section className="print-section-objectives">
+        <div className="print-section-header">
+          <span className="print-section-title">Objectives</span>
+          <Target className="print-section-icon" />
+        </div>
+        <div className="print-section-content">
+          <p>{canvas.objectives.primaryGoal} {canvas.objectives.strategicFocus.length > 0 && `Balance focus areas: ${canvas.objectives.strategicFocus.slice(0, 3).join(', ')}.`}</p>
+        </div>
+      </section>
+
+      {/* Main Grid Layout */}
+      <div className="print-main-grid">
+        {/* Left Column: Inputs */}
+        <section className="print-section-inputs">
+          <div className="print-section-header">
+            <span className="print-section-title">Inputs</span>
+            <Database className="print-section-icon" />
+          </div>
+          <div className="print-section-content">
+            <div className="print-subsection">
+              <strong>Data:</strong> {canvas.inputs.resources.slice(0, 3).join(', ')}.
+            </div>
+            <div className="print-subsection">
+              <strong>People:</strong> {canvas.inputs.personnel.slice(0, 3).join(', ')}.
+            </div>
+            <div className="print-subsection">
+              <strong>Technology:</strong> {canvas.inputs.externalSupport.slice(0, 2).join(', ')}.
+            </div>
+          </div>
+        </section>
+
+        {/* Middle Column: Impacts */}
+        <section className="print-section-impacts">
+          <div className="print-section-header">
+            <span className="print-section-title">Impacts</span>
+            <CheckSquare className="print-section-icon" />
+          </div>
+          <div className="print-section-content">
+            {canvas.impacts.hardBenefits.slice(0, 3).map((b, i) => (
+              <div key={i} className="print-subsection">
+                <strong>{b.split(':')[0]}:</strong> {b.includes(':') ? b.split(':')[1] : b}
+              </div>
+            ))}
+            <div className="print-subsection">
+              <strong>Soft benefits:</strong> {canvas.impacts.softBenefits.slice(0, 3).join(', ')}.
+            </div>
+          </div>
+        </section>
+
+        {/* Right Column: Timeline - Spans multiple rows */}
+        <section className="print-section-timeline">
+          <div className="print-section-header">
+            <span className="print-section-title">Timeline & Milestones</span>
+            <Calendar className="print-section-icon" />
+          </div>
+          <div className="print-section-content print-timeline-content">
+            {['Q1', '1-Year', '3-Year'].map((timeframe, idx) => {
+              const items = canvas.timeline.filter(t => t.timeframe === timeframe);
+              const phaseLabel = timeframe === 'Q1' ? 'Phase 1 (Q1)' : timeframe === '1-Year' ? 'Phase 2 (Year 1)' : 'Phase 3 (Years 2-3)';
+              return items.length > 0 && (
+                <div key={timeframe} className="print-phase">
+                  <strong>{phaseLabel}:</strong> {items.map(t => t.aiInitiative).join(', ')}.
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Bottom Left in Grid: Risks */}
+        <section className="print-section-risks">
+          <div className="print-section-header">
+            <span className="print-section-title">Risks</span>
+            <AlertTriangle className="print-section-icon" />
+          </div>
+          <div className="print-section-content">
+            {canvas.risks.length === 0 ? (
+              <div className="print-subsection"><em>No significant risks identified.</em></div>
+            ) : (
+              canvas.risks.slice(0, 3).map((r, i) => (
+                <div key={i} className="print-subsection">
+                  <strong>{r.likelihood} risk:</strong> {r.name.replace(' Implementation Risk', '')} - {r.mitigation.substring(0, 60)}...
+                </div>
+              ))
+            )}
+          </div>
+        </section>
+
+        {/* Bottom Middle: Capabilities */}
+        <section className="print-section-capabilities">
+          <div className="print-section-header">
+            <span className="print-section-title">Capabilities</span>
+            <Cpu className="print-section-icon" />
+          </div>
+          <div className="print-section-content">
+            <div className="print-subsection">
+              <strong>Existing:</strong> {canvas.capabilities.skillsNeeded.slice(0, 3).join(', ')}.
+            </div>
+            <div className="print-subsection">
+              <strong>Required to scale:</strong> {canvas.capabilities.technology.slice(0, 3).join(', ')}.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Costs & Benefits Row */}
+      <div className="print-costs-benefits-row">
+        <section className="print-section-costs">
+          <div className="print-section-header">
+            <span className="print-section-title">Costs</span>
+            <DollarSign className="print-section-icon" />
+          </div>
+          <div className="print-section-content">
+            <div className="print-subsection">
+              <strong>Hard costs:</strong> Implementation {formatCurrency(canvas.costs.nearTerm + canvas.costs.longTerm)}, Annual maintenance {formatCurrency(canvas.costs.annualMaintenance)}.
+            </div>
+            <div className="print-subsection">
+              <strong>Soft costs:</strong> Training, change management, governance overhead.
+            </div>
+            <div className="print-subsection">
+              <strong>Portfolio view:</strong> Near-term {formatCurrency(canvas.costs.nearTerm)}, Long-term {formatCurrency(canvas.costs.longTerm)}.
+            </div>
+          </div>
+        </section>
+
+        <section className="print-section-benefits">
+          <div className="print-section-header">
+            <span className="print-section-title">Benefits</span>
+            <TrendingUp className="print-section-icon" />
+          </div>
+          <div className="print-section-content">
+            <div className="print-subsection">
+              <strong>Hard benefits:</strong> Near-term {formatCurrency(canvas.benefits.nearTerm)}/yr, Long-term {formatCurrency(canvas.benefits.longTerm)}/yr.
+            </div>
+            <div className="print-subsection">
+              <strong>Soft benefits:</strong> {canvas.benefits.softBenefits.slice(0, 4).join(', ')}.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Portfolio ROI - Full Width */}
+      <section className="print-section-roi">
+        <div className="print-section-header">
+          <span className="print-section-title">Portfolio Return on Investment</span>
+          <PieChart className="print-section-icon" />
+        </div>
+        <div className="print-section-content">
+          <p>
+            <strong>Near-Term ROI: {formatPercent(canvas.portfolioROI.nearTermROIPercent)}</strong> | <strong>Long-Term ROI: {formatPercent(canvas.portfolioROI.longTermROIPercent)}</strong>
+          </p>
+          <p className="print-roi-note">{canvas.portfolioROI.portfolioNote}</p>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="print-canvas-footer">
+        <span>{canvas.footer.creditLine}</span>
+      </footer>
     </div>
   );
 }

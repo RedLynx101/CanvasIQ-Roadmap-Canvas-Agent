@@ -257,17 +257,13 @@
 }
 
 /* ========================
-   PRINT STYLES
+   PRINT STYLES - Single Page Canvas
    ======================== */
 @media print {
-  /* Reset to light theme for printing */
-  :root {
-    --background: #ffffff;
-    --foreground: #1a1a1a;
-    --card: #ffffff;
-    --card-foreground: #1a1a1a;
-    --muted-foreground: #6b7280;
-    --border: #e5e7eb;
+  /* Page setup - Landscape for single-page fit */
+  @page {
+    size: landscape;
+    margin: 0.3in;
   }
   
   /* Base print settings */
@@ -275,23 +271,21 @@
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
   }
   
   html, body {
     background: white !important;
-    color: #1a1a1a !important;
-    font-size: 11pt !important;
-    line-height: 1.4 !important;
-  }
-  
-  /* Page setup */
-  @page {
-    size: A4;
-    margin: 0.75in 0.5in;
-  }
-  
-  @page :first {
-    margin-top: 0.5in;
+    color: #1f2937 !important;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+    font-size: 8pt !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden !important;
   }
   
   /* Hide non-printable elements */
@@ -300,164 +294,229 @@
   button {
     display: none !important;
   }
+
+  /* ===========================================
+     SINGLE-PAGE CANVAS GRID LAYOUT
+     =========================================== */
   
-  /* Prevent page breaks inside elements */
-  .print-section,
-  [data-print-section] {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  
-  /* Force page breaks before major sections */
-  .print-page-break {
-    break-before: page !important;
-    page-break-before: always !important;
-  }
-  
-  /* Cards should not break across pages */
-  .card,
-  [class*="Card"],
-  [class*="card"] {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-    box-shadow: none !important;
-    border: 1px solid #e5e7eb !important;
-    background: white !important;
-  }
-  
-  /* Tables should not break rows */
-  tr {
-    break-inside: avoid !important;
-    page-break-inside: avoid !important;
-  }
-  
-  /* Keep headers with content */
-  h1, h2, h3, h4, h5, h6 {
-    break-after: avoid !important;
-    page-break-after: avoid !important;
-  }
-  
-  /* Reset dark mode backgrounds */
-  .dark,
-  [class*="bg-card"],
-  [class*="bg-background"],
-  [class*="bg-muted"] {
-    background: white !important;
-  }
-  
-  /* Ensure text is readable */
-  [class*="text-muted-foreground"] {
-    color: #6b7280 !important;
-  }
-  
-  [class*="text-foreground"],
-  [class*="font-medium"],
-  [class*="font-bold"] {
-    color: #1a1a1a !important;
-  }
-  
-  /* Fix gradients and special backgrounds */
-  [class*="bg-gradient"],
-  [class*="from-"],
-  .glass,
-  .radial-overlay,
-  .matrix-grid {
-    background: #f9fafb !important;
-    border: 1px solid #e5e7eb !important;
-  }
-  
-  /* Badges - ensure readability */
-  [class*="Badge"],
-  .badge {
-    border: 1px solid currentColor !important;
-    background: transparent !important;
-  }
-  
-  /* Links */
-  a {
-    color: #2563eb !important;
-    text-decoration: none !important;
-  }
-  
-  /* Remove shadows and blurs */
-  * {
-    box-shadow: none !important;
-    text-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-  
-  /* Progress bars */
-  [role="progressbar"] {
-    background: #e5e7eb !important;
-  }
-  
-  [role="progressbar"] > * {
-    background: #3b82f6 !important;
-  }
-  
-  /* Scrollbars hidden */
-  ::-webkit-scrollbar {
-    display: none !important;
-  }
-  
-  /* Canvas-specific print styles */
-  .canvas-print-container {
+  .print-canvas {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: 100vh !important;
+    max-height: 7.5in !important;
     padding: 0 !important;
     margin: 0 !important;
-    max-width: 100% !important;
+    background: white !important;
+    overflow: hidden !important;
+    font-size: 7.5pt !important;
   }
-  
-  .canvas-header {
-    break-after: avoid !important;
-    margin-bottom: 16pt !important;
-  }
-  
-  .canvas-section {
-    break-inside: avoid !important;
-    margin-bottom: 12pt !important;
-  }
-  
-  .canvas-grid {
-    display: block !important;
-  }
-  
-  .canvas-grid > * {
-    break-inside: avoid !important;
-    margin-bottom: 8pt !important;
-  }
-  
-  /* Use case cards in print */
-  .use-case-card {
-    break-inside: avoid !important;
-    border: 1px solid #d1d5db !important;
-    padding: 8pt !important;
-    margin-bottom: 8pt !important;
-  }
-  
-  /* Metrics section */
-  .metrics-row {
+
+  /* Canvas Header - Title Bar */
+  .print-canvas-header {
     display: flex !important;
     justify-content: space-between !important;
-    gap: 12pt !important;
+    align-items: center !important;
+    padding: 8pt 12pt !important;
+    background: white !important;
+    border-bottom: 2pt solid #1f2937 !important;
+    margin-bottom: 6pt !important;
   }
-  
-  .metric-box {
-    break-inside: avoid !important;
-    flex: 1 !important;
-    text-align: center !important;
-    padding: 8pt !important;
-    border: 1px solid #e5e7eb !important;
+
+  .print-canvas-title {
+    font-size: 16pt !important;
+    font-weight: 700 !important;
+    color: #1f2937 !important;
+    margin: 0 !important;
+    letter-spacing: -0.02em !important;
   }
-  
-  /* Footer */
-  .canvas-footer {
-    break-inside: avoid !important;
-    margin-top: 16pt !important;
-    padding-top: 8pt !important;
-    border-top: 1px solid #e5e7eb !important;
-    text-align: center !important;
+
+  .print-canvas-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4pt !important;
     font-size: 9pt !important;
+    font-weight: 600 !important;
+    color: #3b82f6 !important;
+  }
+
+  .print-canvas-brand svg {
+    width: 12pt !important;
+    height: 12pt !important;
+  }
+
+  /* Section Header Style */
+  .print-section-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 3pt 6pt !important;
+    background: #f3f4f6 !important;
+    border-bottom: 0.5pt solid #d1d5db !important;
+  }
+
+  .print-section-title {
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    color: #1f2937 !important;
+    text-transform: none !important;
+  }
+
+  .print-section-icon {
+    width: 10pt !important;
+    height: 10pt !important;
+    color: #6b7280 !important;
+  }
+
+  .print-section-content {
+    padding: 4pt 6pt !important;
+    font-size: 7pt !important;
+    line-height: 1.35 !important;
+    color: #374151 !important;
+  }
+
+  .print-subsection {
+    margin-bottom: 2pt !important;
+  }
+
+  .print-subsection strong {
+    color: #1f2937 !important;
+  }
+
+  /* Objectives Section - Full Width */
+  .print-section-objectives {
+    border: 0.75pt solid #d1d5db !important;
+    margin-bottom: 6pt !important;
+  }
+
+  .print-section-objectives .print-section-content {
+    font-size: 7.5pt !important;
+  }
+
+  /* Main Grid Layout */
+  .print-main-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 2fr !important;
+    grid-template-rows: auto auto !important;
+    gap: 0 !important;
+    margin-bottom: 6pt !important;
+    flex: 1 !important;
+    min-height: 0 !important;
+  }
+
+  /* Section borders */
+  .print-section-inputs,
+  .print-section-impacts,
+  .print-section-timeline,
+  .print-section-risks,
+  .print-section-capabilities {
+    border: 0.75pt solid #d1d5db !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+  }
+
+  /* Inputs - Top Left */
+  .print-section-inputs {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
+  /* Impacts - Top Middle */
+  .print-section-impacts {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    border-right: none !important;
+    border-bottom: none !important;
+  }
+
+  /* Timeline - Right side, spans both rows */
+  .print-section-timeline {
+    grid-column: 3 !important;
+    grid-row: 1 / 3 !important;
+  }
+
+  .print-timeline-content {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4pt !important;
+  }
+
+  .print-phase {
+    padding: 3pt 0 !important;
+    border-bottom: 0.5pt solid #e5e7eb !important;
+  }
+
+  .print-phase:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Risks - Bottom Left */
+  .print-section-risks {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    border-right: none !important;
+  }
+
+  /* Capabilities - Bottom Middle */
+  .print-section-capabilities {
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    border-right: none !important;
+  }
+
+  /* Costs & Benefits Row */
+  .print-costs-benefits-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0 !important;
+    margin-bottom: 6pt !important;
+  }
+
+  .print-section-costs,
+  .print-section-benefits {
+    border: 0.75pt solid #d1d5db !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .print-section-costs {
+    border-right: none !important;
+  }
+
+  /* Portfolio ROI Section */
+  .print-section-roi {
+    border: 0.75pt solid #d1d5db !important;
+    margin-bottom: 6pt !important;
+  }
+
+  .print-section-roi .print-section-content {
+    text-align: left !important;
+  }
+
+  .print-roi-note {
+    font-size: 6.5pt !important;
+    color: #6b7280 !important;
+    margin-top: 2pt !important;
+  }
+
+  /* Canvas Footer */
+  .print-canvas-footer {
+    text-align: center !important;
+    font-size: 6.5pt !important;
     color: #9ca3af !important;
+    padding-top: 4pt !important;
+    border-top: 0.5pt solid #e5e7eb !important;
+    margin-top: auto !important;
+  }
+
+  /* Legacy styles for old preview (hidden on print) */
+  .canvas-print-container,
+  .canvas-header,
+  .canvas-section,
+  .canvas-footer {
+    display: none !important;
   }
 }
