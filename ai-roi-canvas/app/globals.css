@@ -255,3 +255,210 @@
 .radial-overlay {
   background: radial-gradient(ellipse at top, oklch(0.65 0.2 250 / 0.15), transparent 50%);
 }
+
+/* ========================
+   PRINT STYLES
+   ======================== */
+@media print {
+  /* Reset to light theme for printing */
+  :root {
+    --background: #ffffff;
+    --foreground: #1a1a1a;
+    --card: #ffffff;
+    --card-foreground: #1a1a1a;
+    --muted-foreground: #6b7280;
+    --border: #e5e7eb;
+  }
+  
+  /* Base print settings */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  html, body {
+    background: white !important;
+    color: #1a1a1a !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+  }
+  
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 0.75in 0.5in;
+  }
+  
+  @page :first {
+    margin-top: 0.5in;
+  }
+  
+  /* Hide non-printable elements */
+  .no-print,
+  nav,
+  button,
+  .print\\:hidden {
+    display: none !important;
+  }
+  
+  /* Prevent page breaks inside elements */
+  .print-section,
+  [data-print-section] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Force page breaks before major sections */
+  .print-page-break {
+    break-before: page !important;
+    page-break-before: always !important;
+  }
+  
+  /* Cards should not break across pages */
+  .card,
+  [class*="Card"],
+  [class*="card"] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    box-shadow: none !important;
+    border: 1px solid #e5e7eb !important;
+    background: white !important;
+  }
+  
+  /* Tables should not break rows */
+  tr {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Keep headers with content */
+  h1, h2, h3, h4, h5, h6 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+  
+  /* Reset dark mode backgrounds */
+  .dark,
+  [class*="bg-card"],
+  [class*="bg-background"],
+  [class*="bg-muted"] {
+    background: white !important;
+  }
+  
+  /* Ensure text is readable */
+  [class*="text-muted-foreground"] {
+    color: #6b7280 !important;
+  }
+  
+  [class*="text-foreground"],
+  [class*="font-medium"],
+  [class*="font-bold"] {
+    color: #1a1a1a !important;
+  }
+  
+  /* Fix gradients and special backgrounds */
+  [class*="bg-gradient"],
+  [class*="from-"],
+  .glass,
+  .radial-overlay,
+  .matrix-grid {
+    background: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  
+  /* Badges - ensure readability */
+  [class*="Badge"],
+  .badge {
+    border: 1px solid currentColor !important;
+    background: transparent !important;
+  }
+  
+  /* Links */
+  a {
+    color: #2563eb !important;
+    text-decoration: none !important;
+  }
+  
+  /* Remove shadows and blurs */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  
+  /* Progress bars */
+  [role="progressbar"] {
+    background: #e5e7eb !important;
+  }
+  
+  [role="progressbar"] > * {
+    background: #3b82f6 !important;
+  }
+  
+  /* Scrollbars hidden */
+  ::-webkit-scrollbar {
+    display: none !important;
+  }
+  
+  /* Canvas-specific print styles */
+  .canvas-print-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+  
+  .canvas-header {
+    break-after: avoid !important;
+    margin-bottom: 16pt !important;
+  }
+  
+  .canvas-section {
+    break-inside: avoid !important;
+    margin-bottom: 12pt !important;
+  }
+  
+  .canvas-grid {
+    display: block !important;
+  }
+  
+  .canvas-grid > * {
+    break-inside: avoid !important;
+    margin-bottom: 8pt !important;
+  }
+  
+  /* Use case cards in print */
+  .use-case-card {
+    break-inside: avoid !important;
+    border: 1px solid #d1d5db !important;
+    padding: 8pt !important;
+    margin-bottom: 8pt !important;
+  }
+  
+  /* Metrics section */
+  .metrics-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 12pt !important;
+  }
+  
+  .metric-box {
+    break-inside: avoid !important;
+    flex: 1 !important;
+    text-align: center !important;
+    padding: 8pt !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  
+  /* Footer */
+  .canvas-footer {
+    break-inside: avoid !important;
+    margin-top: 16pt !important;
+    padding-top: 8pt !important;
+    border-top: 1px solid #e5e7eb !important;
+    text-align: center !important;
+    font-size: 9pt !important;
+    color: #9ca3af !important;
+  }
+}

@@ -13,8 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AI ROI Canvas | Strategic AI Portfolio Planning",
-  description: "Build your AI strategy with ROI-driven portfolio selection and roadmap generation",
+  title: "CanvasIQ | AI ROI & Strategic Roadmap Planning",
+  description: "Build your AI strategy with ROI-driven portfolio selection and roadmap generation. CanvasIQ helps you identify, prioritize, and plan AI initiatives for maximum business impact.",
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
+  keywords: ['AI ROI', 'AI Strategy', 'AI Portfolio', 'AI Roadmap', 'Business Intelligence', 'AI Planning'],
+  authors: [{ name: 'CanvasIQ Agent' }],
 };
 
 export default function RootLayout({
@@ -24,6 +31,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
       >

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { 
@@ -9,11 +10,11 @@ import {
   PieChart, 
   Map, 
   FileOutput,
-  Sparkles
+  Home
 } from 'lucide-react';
 
 const navItems = [
-  { href: '/', label: 'Home', icon: Sparkles },
+  { href: '/', label: 'Home', icon: Home },
   { href: '/interview', label: 'Interview', icon: MessageSquare },
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/portfolio', label: 'Portfolio', icon: PieChart },
@@ -29,13 +30,27 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--electric)] to-[var(--emerald-accent)] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-white" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--electric)] via-[var(--emerald-accent)] to-[var(--violet-accent)] p-0.5 shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
+              <div className="w-full h-full rounded-[10px] bg-background/90 flex items-center justify-center overflow-hidden">
+                <Image 
+                  src="/favicon.ico" 
+                  alt="CanvasIQ" 
+                  width={24} 
+                  height={24}
+                  className="object-contain"
+                />
+              </div>
             </div>
-            <span className="font-semibold text-lg gradient-text">
-              AI ROI Canvas
-            </span>
+            <div className="flex flex-col">
+              <span className="font-bold text-lg leading-tight tracking-tight">
+                <span className="text-foreground">Canvas</span>
+                <span className="gradient-text">IQ</span>
+              </span>
+              <span className="text-[10px] text-muted-foreground leading-none hidden sm:block">
+                AI ROI & Roadmap
+              </span>
+            </div>
           </Link>
 
           {/* Nav Links */}
@@ -66,4 +81,3 @@ export function Navigation() {
     </nav>
   );
 }
-

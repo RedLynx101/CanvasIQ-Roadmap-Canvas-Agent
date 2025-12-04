@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Navigation } from '@/components/Navigation';
@@ -82,22 +83,39 @@ export default function HomePage() {
             <span className="text-sm font-medium">AI-Powered Strategic Planning</span>
           </div>
 
+          {/* Logo Icon */}
+          <div className="flex justify-center mb-6 animate-fade-up animate-delay-100">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-[var(--electric)] via-[var(--emerald-accent)] to-[var(--violet-accent)] p-1 shadow-2xl shadow-primary/30">
+              <div className="w-full h-full rounded-xl bg-background/90 flex items-center justify-center">
+                <Image 
+                  src="/favicon.ico" 
+                  alt="CanvasIQ" 
+                  width={48} 
+                  height={48}
+                  className="object-contain"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Headline */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 animate-fade-up animate-delay-100">
-            Build Your{' '}
-            <span className="gradient-text">AI Strategy</span>
-            <br />
-            with Confidence
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6 animate-fade-up animate-delay-200">
+            <span className="text-foreground">Canvas</span>
+            <span className="gradient-text">IQ</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up animate-delay-200">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4 animate-fade-up animate-delay-300">
+            Build Your <span className="text-foreground font-medium">AI Strategy</span> with Confidence
+          </p>
+          
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 animate-fade-up animate-delay-300">
             Capture use cases, compute ROI, select your portfolio, and generate 
             a strategic roadmap—all guided by an intelligent AI consultant.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up animate-delay-300">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-up animate-delay-400">
             <Link href="/interview">
               <Button size="lg" className="gap-2 px-8 h-12 text-base bg-gradient-to-r from-[var(--electric)] to-[var(--emerald-accent)] hover:opacity-90 transition-opacity">
                 Start Building
@@ -112,7 +130,7 @@ export default function HomePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-xl mx-auto mt-16 animate-fade-up animate-delay-400">
+          <div className="grid grid-cols-3 gap-8 max-w-xl mx-auto mt-16 animate-fade-up animate-delay-500">
             <div>
               <div className="text-3xl font-bold gradient-text">5+</div>
               <div className="text-sm text-muted-foreground">Use Cases</div>
@@ -170,7 +188,7 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                Why Use AI ROI Canvas?
+                Why Use <span className="text-foreground">Canvas</span><span className="gradient-text">IQ</span>?
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Transform your AI strategy from wishful thinking to data-driven 
@@ -198,6 +216,16 @@ export default function HomePage() {
             {/* Canvas Preview */}
             <div className="relative">
               <div className="glass rounded-2xl p-6 border border-primary/20">
+                <div className="flex items-center gap-2 mb-4">
+                  <Image 
+                    src="/favicon.ico" 
+                    alt="CanvasIQ" 
+                    width={20} 
+                    height={20}
+                    className="object-contain"
+                  />
+                  <span className="text-sm font-medium">CanvasIQ Output</span>
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-primary/10 rounded-lg p-4">
                     <div className="text-xs text-muted-foreground mb-1">Portfolio ROI</div>
@@ -260,7 +288,16 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-border/50">
         <div className="max-w-6xl mx-auto text-center text-sm text-muted-foreground">
-          <p>AI ROI & Roadmap Canvas Agent — Strategic AI Portfolio Planning</p>
+          <p className="flex items-center justify-center gap-2">
+            <Image 
+              src="/favicon.ico" 
+              alt="CanvasIQ" 
+              width={16} 
+              height={16}
+              className="object-contain opacity-60"
+            />
+            <span><strong className="text-foreground">CanvasIQ</strong> — AI ROI & Strategic Roadmap Planning</span>
+          </p>
         </div>
       </footer>
     </main>
