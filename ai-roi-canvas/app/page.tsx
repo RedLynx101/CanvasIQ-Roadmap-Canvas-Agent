@@ -296,8 +296,9 @@ export default function HomePage() {
               height={16}
               className="object-contain opacity-60"
             />
-            <span><strong className="text-foreground">CanvasIQ</strong> — AI ROI & Strategic Roadmap Planning</span>
+            <span><strong className="text-foreground">CanvasIQ</strong></span>
           </p>
+          <p className="mt-2 text-xs">Created by Noah Hicks</p>
         </div>
       </footer>
     </main>

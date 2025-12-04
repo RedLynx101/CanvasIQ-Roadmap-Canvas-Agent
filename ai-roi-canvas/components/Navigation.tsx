@@ -42,15 +42,10 @@ export function Navigation() {
                 />
               </div>
             </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-lg leading-tight tracking-tight">
-                <span className="text-foreground">Canvas</span>
-                <span className="gradient-text">IQ</span>
-              </span>
-              <span className="text-[10px] text-muted-foreground leading-none hidden sm:block">
-                AI ROI & Roadmap
-              </span>
-            </div>
+            <span className="font-bold text-lg leading-tight tracking-tight">
+              <span className="text-foreground">Canvas</span>
+              <span className="gradient-text">IQ</span>
+            </span>
           </Link>
 
           {/* Nav Links */}
