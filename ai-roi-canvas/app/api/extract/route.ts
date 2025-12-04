@@ -40,7 +40,7 @@ Only include fields that are clearly mentioned. Use null for missing fields.`;
         { role: 'user', content: content },
       ],
       temperature: 0.3,
-      max_tokens: 1000,
+      max_completion_tokens: 10000,
       response_format: { type: 'json_object' },
     });
 

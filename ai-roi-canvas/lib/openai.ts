@@ -6,5 +6,5 @@ export const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export const MODEL = 'gpt-4.1'; // Using gpt-4.1 as specified
+export const MODEL = 'gpt-5.1'; // Using gpt-5.1 as specified
 

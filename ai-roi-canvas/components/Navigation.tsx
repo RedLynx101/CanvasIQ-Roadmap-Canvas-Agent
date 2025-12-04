@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { 
@@ -33,7 +32,8 @@ export function Navigation() {
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[var(--electric)] via-[var(--emerald-accent)] to-[var(--violet-accent)] p-0.5 shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow">
               <div className="w-full h-full rounded-[10px] bg-background/90 flex items-center justify-center overflow-hidden">
-                <Image 
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
                   src="/favicon.ico" 
                   alt="CanvasIQ" 
                   width={24} 
