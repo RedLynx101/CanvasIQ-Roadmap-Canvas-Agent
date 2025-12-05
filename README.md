@@ -13,9 +13,13 @@
 
 **Build your AI strategy with confidence.** CanvasIQ guides you through capturing use cases, computing ROI, selecting your portfolio, and generating a strategic roadmap—all powered by an intelligent AI consultant.
 
-[Live Demo](#) · [Report Bug](../../issues) · [Request Feature](../../issues)
+<br />
 
-<img src="public/preview.png" alt="CanvasIQ Preview" width="800" />
+### 🚀 [Try the Live Demo →](https://canvasiq.replit.app/)
+
+<br />
+
+[Report Bug](../../issues) · [Request Feature](../../issues)
 
 </div>
 
@@ -36,6 +40,44 @@ Organizations struggle to:
 ### The Solution
 
 CanvasIQ provides a structured, AI-guided approach to strategic planning that transforms vague AI ambitions into data-driven investment decisions with clear financial justification.
+
+---
+
+## 🎮 Try It Now
+
+**[Launch CanvasIQ →](https://canvasiq.replit.app/)**
+
+Want to test it out? Copy and paste this sample prompt into the interview chat:
+
+<details>
+<summary><b>📋 Click to expand sample prompt</b></summary>
+
+```
+Hi! I'm the CTO at Tartan Solutions, a mid-sized manufacturing company in the automotive parts industry. We have about 2,000 employees and $150M in annual revenue. Our budget for AI initiatives this year is $1.5 million.
+
+We're looking to implement AI across several areas. Let me share our top use cases:
+
+1. Predictive Quality Control - We have a 3% defect rate that costs us $2M annually in rework and returns. We believe AI vision systems could reduce this to under 1%. Implementation would cost around $400K with $80K annual maintenance. This is high impact but requires significant effort to integrate with our production lines.
+
+2. Demand Forecasting - Our inventory carrying costs are $1.5M/year due to poor forecasting. An ML model could improve accuracy by 25%, saving $500K annually. Cost: $150K implementation, $40K/year. Medium effort, medium-high impact.
+
+3. Chatbot for Supplier Inquiries - Our procurement team spends 30% of time on routine supplier questions. A chatbot could save $300K in labor annually. Cost: $80K implementation, $20K/year. Low effort, medium impact.
+
+4. Predictive Maintenance for CNC Machines - Unplanned downtime costs us $800K/year. Predictive maintenance could reduce this by 60%. Cost: $250K implementation, $60K/year. High effort and high impact, but depends on IoT sensor installation.
+
+5. Document Processing for Compliance - We spend $400K/year on manual compliance document review. AI could automate 70% of this. Cost: $120K implementation, $30K/year. Low effort, high impact.
+
+Can you help me analyze these and build our AI roadmap?
+```
+
+</details>
+
+This prompt demonstrates a realistic enterprise scenario with:
+- ✅ Company context (industry, size, budget)
+- ✅ 5 diverse AI use cases
+- ✅ Financial estimates (costs & benefits)
+- ✅ Effort/impact assessments
+- ✅ Dependencies between projects
 
 ---
 
@@ -199,18 +241,6 @@ graph LR
 
 ---
 
-## 🧪 Demo Mode
-
-Each page includes a **"Load Demo Data"** button that populates the system with sample AI use cases for demonstration:
-
-- Customer Service Chatbot
-- Predictive Maintenance
-- Demand Forecasting
-- Document Processing AI
-- AI-Powered Recommendations
-
----
-
 ## 📐 ROI Formulas
 
 ### Basic ROI
@@ -282,6 +312,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 <div align="center">
+
+### 🚀 [Try CanvasIQ Now →](https://canvasiq.replit.app/)
 
 **Built with ❤️ by [Noah Hicks](https://github.com/yourusername)**
 
