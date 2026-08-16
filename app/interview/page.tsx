@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Navigation } from '@/components/Navigation';
+import { useHydration } from '@/components/StoreProvider';
 import { ChatInterface } from '@/components/chat/ChatInterface';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -19,11 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function InterviewPage() {
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydration();
   
   if (!mounted) {
     return (

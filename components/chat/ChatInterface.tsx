@@ -188,8 +188,8 @@ export function ChatInterface() {
             timeframe?: string;
           }, index: number) => {
             // Clamp effort and impact scores to valid range
-            let effort = Math.min(5, Math.max(1, uc.effortScore || 3)) as 1|2|3|4|5;
-            let impact = Math.min(5, Math.max(1, uc.impactScore || 3)) as 1|2|3|4|5;
+            const effort = Math.min(5, Math.max(1, uc.effortScore || 3)) as 1|2|3|4|5;
+            const impact = Math.min(5, Math.max(1, uc.impactScore || 3)) as 1|2|3|4|5;
             
             // Validate risk level
             const validRisks = ['Low', 'Medium', 'High'];
@@ -264,8 +264,8 @@ export function ChatInterface() {
               dependencies?: string[];
               timeframe?: string;
             }, index: number) => {
-              let effort = Math.min(5, Math.max(1, uc.effortScore || 3)) as 1|2|3|4|5;
-              let impact = Math.min(5, Math.max(1, uc.impactScore || 3)) as 1|2|3|4|5;
+              const effort = Math.min(5, Math.max(1, uc.effortScore || 3)) as 1|2|3|4|5;
+              const impact = Math.min(5, Math.max(1, uc.impactScore || 3)) as 1|2|3|4|5;
               
               const validRisks = ['Low', 'Medium', 'High'];
               const normalizedRisk = (uc.riskLevel || '').toLowerCase().replace(/[^a-z]/g, '');
@@ -332,7 +332,7 @@ export function ChatInterface() {
       const industryMatch = userMessage.match(/\b(?:in the|industry[:\s]+|sector[:\s]+)\s*([A-Za-z][A-Za-z\s]{2,}?)(?:\s+industry|\s+sector|\s+space|\.|\,)/i);
       const budgetMatch = userMessage.match(/budget[^\d]*\$?([\d,.]+)\s*(million|m|k|thousand)?/i);
       
-      let name = companyMatch ? companyMatch[1].trim() : '';
+      const name = companyMatch ? companyMatch[1].trim() : '';
       let ind = industryMatch ? industryMatch[1].trim() : '';
       
       // Sanity check - industry should be at least 3 characters and not be a common word

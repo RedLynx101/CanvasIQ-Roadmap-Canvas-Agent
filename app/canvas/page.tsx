@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Navigation } from '@/components/Navigation';
+import { useHydration } from '@/components/StoreProvider';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -31,20 +32,12 @@ import {
   Sparkles,
   CheckSquare,
   Database,
-  Users,
-  Zap,
-  Shield,
-  BarChart3,
   PieChart
 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CanvasPage() {
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useHydration();
   
   if (!mounted) {
     return (
