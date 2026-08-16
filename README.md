@@ -148,8 +148,8 @@ The generated AI ROI & Roadmap Canvas includes all sections needed for executive
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/canvasiq.git
-cd canvasiq
+git clone https://github.com/RedLynx101/CanvasIQ-Roadmap-Canvas-Agent.git
+cd CanvasIQ-Roadmap-Canvas-Agent
 
 # Install dependencies
 npm install
@@ -315,7 +315,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### 🚀 [Try CanvasIQ Now →](https://canvasiq.replit.app/)
 
-**Built with ❤️ by [Noah Hicks](https://github.com/yourusername)**
+## Data boundary
+
+- Interview messages are sent to OpenAI when the AI interview is used.
+- Company context, use cases, budgets, and generated canvas state are persisted in the current browser's local storage.
+- The public demo is not a confidential planning environment and does not provide organizational tenancy or an account boundary. Use synthetic or non-sensitive inputs.
+- The ROI and payback figures shown on the landing page are illustrative examples. Generated results depend on the assumptions supplied by the user and are not investment or implementation guarantees.
+
+**Built by [Noah Hicks](https://github.com/RedLynx101)**
 
 ⭐ Star this repo if you find it useful!
 

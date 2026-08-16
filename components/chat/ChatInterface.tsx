@@ -44,34 +44,34 @@ const phaseProgress: Record<string, number> = {
 
 // Markdown components for styling
 const markdownComponents = {
-  p: ({ children }: { children: React.ReactNode }) => (
+  p: ({ children }: { children?: React.ReactNode }) => (
     <p className="mb-2 last:mb-0">{children}</p>
   ),
-  ul: ({ children }: { children: React.ReactNode }) => (
+  ul: ({ children }: { children?: React.ReactNode }) => (
     <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>
   ),
-  ol: ({ children }: { children: React.ReactNode }) => (
+  ol: ({ children }: { children?: React.ReactNode }) => (
     <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>
   ),
-  li: ({ children }: { children: React.ReactNode }) => (
+  li: ({ children }: { children?: React.ReactNode }) => (
     <li className="ml-2">{children}</li>
   ),
-  strong: ({ children }: { children: React.ReactNode }) => (
+  strong: ({ children }: { children?: React.ReactNode }) => (
     <strong className="font-semibold text-foreground">{children}</strong>
   ),
-  em: ({ children }: { children: React.ReactNode }) => (
+  em: ({ children }: { children?: React.ReactNode }) => (
     <em className="italic">{children}</em>
   ),
-  h1: ({ children }: { children: React.ReactNode }) => (
+  h1: ({ children }: { children?: React.ReactNode }) => (
     <h1 className="text-lg font-bold mb-2 mt-3">{children}</h1>
   ),
-  h2: ({ children }: { children: React.ReactNode }) => (
+  h2: ({ children }: { children?: React.ReactNode }) => (
     <h2 className="text-base font-bold mb-2 mt-3">{children}</h2>
   ),
-  h3: ({ children }: { children: React.ReactNode }) => (
+  h3: ({ children }: { children?: React.ReactNode }) => (
     <h3 className="text-sm font-bold mb-1 mt-2">{children}</h3>
   ),
-  code: ({ children, className }: { children: React.ReactNode; className?: string }) => {
+  code: ({ children, className }: { children?: React.ReactNode; className?: string }) => {
     const isInline = !className;
     if (isInline) {
       return <code className="bg-muted px-1 py-0.5 rounded text-xs">{children}</code>;
@@ -82,15 +82,15 @@ const markdownComponents = {
       </pre>
     );
   },
-  table: ({ children }: { children: React.ReactNode }) => (
+  table: ({ children }: { children?: React.ReactNode }) => (
     <div className="overflow-x-auto my-2">
       <table className="min-w-full text-xs border-collapse">{children}</table>
     </div>
   ),
-  th: ({ children }: { children: React.ReactNode }) => (
+  th: ({ children }: { children?: React.ReactNode }) => (
     <th className="border border-border px-2 py-1 bg-muted font-semibold text-left">{children}</th>
   ),
-  td: ({ children }: { children: React.ReactNode }) => (
+  td: ({ children }: { children?: React.ReactNode }) => (
     <td className="border border-border px-2 py-1">{children}</td>
   ),
 };

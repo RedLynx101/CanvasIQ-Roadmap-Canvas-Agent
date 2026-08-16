@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { openai, MODEL } from '@/lib/openai';
+import { getOpenAI, MODEL } from '@/lib/openai';
 import { USE_CASE_EXTRACTION_PROMPT } from '@/lib/prompts';
 
 // API route for extracting structured data from user messages
 export async function POST(request: NextRequest) {
   try {
+    const openai = getOpenAI();
     const body = await request.json();
     const { content, extractionType } = body;
 

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions';
-import { openai, MODEL } from '@/lib/openai';
+import { getOpenAI, MODEL } from '@/lib/openai';
 import { buildSystemMessage } from '@/lib/prompts';
 import { mathToolDefinition, evaluateMathExpression } from '@/lib/math-tool';
 
@@ -38,6 +38,7 @@ async function streamChatWithMathTools(
   messages: CanvasMessage[],
   controller: ReadableStreamDefaultController<Uint8Array>
 ) {
+  const openai = getOpenAI();
   const conversation: CanvasMessage[] = [...messages];
   const maxToolIterations = 10;
 

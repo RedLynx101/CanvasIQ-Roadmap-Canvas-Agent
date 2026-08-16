@@ -228,11 +228,11 @@ export default function HomePage() {
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-primary/10 rounded-lg p-4">
-                    <div className="text-xs text-muted-foreground mb-1">Portfolio ROI</div>
+                    <div className="text-xs text-muted-foreground mb-1">Illustrative portfolio ROI</div>
                     <div className="text-2xl font-bold text-primary">+127%</div>
                   </div>
                   <div className="bg-accent/10 rounded-lg p-4">
-                    <div className="text-xs text-muted-foreground mb-1">Payback</div>
+                    <div className="text-xs text-muted-foreground mb-1">Illustrative payback</div>
                     <div className="text-2xl font-bold text-accent">8.5 mo</div>
                   </div>
                   <div className="col-span-2 bg-muted/50 rounded-lg p-4">
@@ -250,7 +250,7 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-border/50 text-center text-sm text-muted-foreground">
-                  AI ROI & Roadmap Canvas v1.0
+                  Example AI ROI & Roadmap Canvas v1.0
                 </div>
               </div>
               
