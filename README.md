@@ -54,8 +54,6 @@ npm run dev
 
 Open [localhost:3000](http://localhost:3000) and choose **Explore an example**. Northstar Manufacturing is a synthetic fixture with uncertain benefits, a data-foundation prerequisite and constrained delivery capacity. Switch to the conservative scenario to see the decision change.
 
-The [hosted demo](https://canvasiq.replit.app/) is deployed separately and may lag this repository. See the [deployment handoff](docs/deployment.md) before redeploying or enabling AI.
-
 ## Work from Codex or the terminal
 
 The repository includes a [canvasiq skill](skills/canvasiq/SKILL.md). Install its folder into your Codex skills directory to invoke `/canvasiq`. It diagnoses missing evidence and helps identify the minimum viable discovery or pilot workflow.
