@@ -17,7 +17,7 @@ September 5, 2026. Implementation and verification were completed by a single pr
 
 The browser suite covers corrupt-storage recovery without overwriting the original; a complete manual planning journey; keyboard, theme and mobile behavior; explicit AI proposal acceptance and persistence through a later brief save; disabled-provider recovery; and blocked dependencies remaining visible and excluded from financial totals. Domain/API tests cover financial edge cases, known small-portfolio optima, dependency and capacity failures, migration, large decision-history round trips, admission controls, validated provider input, cancellation and split/truncated stream frames.
 
-The release review corrected low-contrast navigation labels, dialog focus restoration, hidden mobile navigation focusability, a stale brief overwriting an accepted AI draft, and an import limit too small for embedded decision history. Large snapshots now explain their limit and direct users to a complete JSON export.
+The Linux CI run also exposed a page-entry opacity animation that briefly reduced contrast; entry motion now preserves full text opacity. The release review corrected low-contrast navigation labels, dialog focus restoration, hidden mobile navigation focusability, a stale brief overwriting an accepted AI draft, and an import limit too small for embedded decision history. Large snapshots now explain their limit and direct users to a complete JSON export.
 
 ## Plan completion and deliberate boundaries
 
